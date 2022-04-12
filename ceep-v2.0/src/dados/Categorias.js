@@ -1,6 +1,6 @@
 export default class Categorias {
     constructor() {
-        this.categorias = ["Trabalho", "Escola"];
+        this.categorias = [];
         this._inscritos = [];
     }
 
@@ -16,5 +16,6 @@ export default class Categorias {
 
     adicionarCategoria(novaCategoria) {
         this.categorias.push(novaCategoria);
+        this.notificar();
     }
 }
