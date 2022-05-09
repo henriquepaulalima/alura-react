@@ -1,25 +1,24 @@
-import { React, useState} from 'react';
+import { React, useState } from 'react';
 import { Button, TextField, Switch, FormControlLabel } from '@mui/material';
 
-function FormularioCadastro() {
+function FormularioCadastro({aoEnviar}) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [promocoes, setPromocoes] = useState(true);
+  const [novidades, setNovidades] = useState(true);
 
   return (
-    <form 
+    <form
       onSubmit={(event) => {
         event.preventDefault();
-        console.log(nome, sobrenome);
+        aoEnviar({nome, sobrenome, cpf, promocoes, novidades});
       }}
     >
       <TextField
         value={nome}
         onChange={(event) => {
-          let tmpNome = event.target.value;
-          if(tmpNome.length >= 20) {
-            tmpNome = tmpNome.substr(0, 20);
-          }
-          setNome(tmpNome);
+          setNome(event.target.value);
         }}
         id="nome"
         label="Nome"
@@ -41,6 +40,10 @@ function FormularioCadastro() {
       />
 
       <TextField
+        value={cpf}
+        onChange={(event) => {
+          setCpf(event.target.value);
+        }}
         id="cpf"
         label="CPF"
         variant="outlined"
@@ -48,8 +51,32 @@ function FormularioCadastro() {
         margin="normal"
       />
 
-      <FormControlLabel control={<Switch defaultChecked />} label="Promoções" />
-      <FormControlLabel control={<Switch defaultChecked />} label="Novidades" />
+      <FormControlLabel
+        label="Promoções"
+        control={
+          <Switch 
+            checked={promocoes}
+            onChange={(event) => {
+              setPromocoes(event.target.checked);
+            }}
+            name="promocoes" 
+            defaultChecked={promocoes} 
+          />
+        }
+      />
+      <FormControlLabel
+        label="Novidades"
+        control={
+          <Switch 
+            checked={novidades}
+            onChange={(event) => {
+              setNovidades(event.target.checked);
+            }} 
+            name="novidades" 
+            defaultChecked={novidades} 
+          />
+        }
+      />
 
       <Button type="submit" variant="contained">Cadastrar</Button>
     </form>
